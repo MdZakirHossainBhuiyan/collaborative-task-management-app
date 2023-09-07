@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Login.css';
 import { Box, Button, Container, createTheme, CssBaseline, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../App';
 
 const Login = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const theme = createTheme();
     const [userInfo, setUserInfo] = useState(null);
     const [previousData, setPreviousData] = useState(null);
@@ -21,6 +23,7 @@ const Login = () => {
         const getUserData = previousData.find(data => data.email === userInfo.email && data.password === userInfo.password);
 
         if(getUserData?.email && getUserData?.password){
+            setLoggedInUser(getUserData);
             navigate("/index", { 
                 replace: true,
             });
