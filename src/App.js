@@ -8,6 +8,7 @@ import SignUp from "./Components/SignUp/SignUp";
 import { createContext, useState } from "react";
 import PrivateOutlet from "./Components/PrivateOutlet/PrivateOutlet";
 import Index from "./Components/Index/Index";
+import Profile from "./Components/Profile/Profile";
 
 export const UserContext = createContext();
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/signUp" element={<SignUp />} />
           <Route path="/*" element={<PrivateOutlet />} >
             <Route path="index" element={<Index />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

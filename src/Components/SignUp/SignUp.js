@@ -6,15 +6,14 @@ import { Link, useNavigate } from 'react-router-dom';
 const SignUp = () => {
     const theme = createTheme();
     const [userInfo, setUserInfo] = useState(null);
+    const [base64ImageData, setBase64ImageData] = useState(null);
     const [previousData, setPreviousData] = useState(null);
     const [isValid, setIsValid] = useState(false);
     const [error, setError] = useState(null);
     let navigate = useNavigate();
 
     const checkValidation = (userEmail) => {
-        const result = previousData.find(data => data.email === userEmail);
-
-        console.log('result', result?.email);
+        const result = previousData.find(data => data?.email === userEmail);
 
         if(result?.email){
             setIsValid(true);
@@ -27,6 +26,24 @@ const SignUp = () => {
         userAllInfo[e.target.name] = e.target.value;
         setUserInfo(userAllInfo);
     }
+
+    const handleImage = (event) => {
+        const file = event.target.files[0];
+        const name = event.target.name;
+    
+        if (file) {
+          const reader = new FileReader();
+    
+          reader.onload = function (e) {
+
+            const userAllInfo = {...userInfo};
+            userAllInfo[name] = e.target.result;
+            setUserInfo(userAllInfo);
+          };
+    
+          reader.readAsDataURL(file);
+        }
+    };
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -102,6 +119,16 @@ const SignUp = () => {
                                 margin="normal"
                                 required
                                 fullWidth
+                                id="bio"
+                                label="Write a Bio"
+                                name="bio"
+                                autoComplete="bio"
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
                                 name="password"
                                 label="Create Password"
                                 type="password"
@@ -109,6 +136,7 @@ const SignUp = () => {
                                 autoComplete="current-password"
                                 onChange={handleChange}
                             />
+                            <input type="file" name="image" accept="image/*" onChange={handleImage} />
                             <Button
                                 type="submit"
                                 fullWidth

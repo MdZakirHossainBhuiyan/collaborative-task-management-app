@@ -2,3 +2,23 @@
     margin: 0;
     padding: 0;
 }
+
+.createTeamArea{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;  
+    color: gray;
+    margin-top: 50px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.createTeamArea button{
+    background-color: cornflowerblue;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #ffff;
+    border-radius: 5px;
+}
