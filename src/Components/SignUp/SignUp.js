@@ -1,18 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './SignUp.css';
 import { Box, Button, Container, createTheme, CssBaseline, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     const theme = createTheme();
+    const [userInfo, setUserInfo] = useState(null);
+    const [previousData, setPreviousData] = useState(null);
+    const [isValid, setIsValid] = useState(false);
+    const [error, setError] = useState(null);
+    let navigate = useNavigate();
+
+    const checkValidation = (userEmail) => {
+        const result = previousData.find(data => data.email === userEmail);
+
+        console.log('result', result?.email);
+
+        if(result?.email){
+            setIsValid(true);
+            console.log(isValid);
+        }
+    }
 
     const handleChange = e => {
-        
+        const userAllInfo = {...userInfo};
+        userAllInfo[e.target.name] = e.target.value;
+        setUserInfo(userAllInfo);
     }
 
     const handleSubmit = event => {
-        
+        event.preventDefault();
+
+        if(previousData !== null){
+            checkValidation(userInfo.email);
+        }
+
+        if(isValid){
+            setError("This Email already exist");
+        }else{
+            if(previousData){
+                const oldValues = [...previousData];
+                oldValues.push(userInfo);
+                localStorage.setItem("userInfo", JSON.stringify(oldValues));
+                navigate("/", { replace: true});
+            }
+            else{
+                const oldValues = [];
+                oldValues.push(userInfo);
+                localStorage.setItem("userInfo", JSON.stringify(oldValues));
+                navigate("/", { replace: true});
+            }
+        }
     }
+
+    useEffect(() => {
+        const userPrevInfo = JSON.parse(localStorage.getItem("userInfo"));
+        setPreviousData(userPrevInfo);
+    }, []);
 
     return (
         <div className='SignUpPage'>
@@ -51,6 +95,9 @@ const SignUp = () => {
                                 autoComplete="email"
                                 onChange={handleChange}
                             />
+                            {
+                                error && <small>{error}</small>
+                            }
                             <TextField
                                 margin="normal"
                                 required
