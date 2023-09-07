@@ -22,3 +22,38 @@
     color: #ffff;
     border-radius: 5px;
 }
+
+.modalStyle{
+    border-radius: 50px;
+}
+
+.modalStyle h2{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.modalInputField{
+    width: 100%;
+    margin: 30px 0px;
+}
+
+.dropdownImage{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.ModalSubmit button{
+    background-color: cornflowerblue;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #ffff;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.modalButton{
+    background-color: gray !important;
+}
