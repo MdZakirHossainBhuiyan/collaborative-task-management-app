@@ -1,9 +1,9 @@
 import React from 'react';
-import './Login.css';
+import './SignUp.css';
 import { Box, Button, Container, createTheme, CssBaseline, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
     const theme = createTheme();
 
     const handleChange = e => {
@@ -15,7 +15,7 @@ const Login = () => {
     }
 
     return (
-        <div className='loginPage'>
+        <div className='SignUpPage'>
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -28,9 +28,19 @@ const Login = () => {
                         }}
                     >
                         <Typography component="h1" variant="h5">
-                            Login
+                            Sign Up
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="userName"
+                                label="User Name"
+                                name="userName"
+                                autoComplete="userName"
+                                onChange={handleChange}
+                            />
                             <TextField
                                 margin="normal"
                                 required
@@ -46,7 +56,7 @@ const Login = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Create Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -58,12 +68,12 @@ const Login = () => {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, backgroundColor: "gray" }}
                             >
-                                Login
+                                Sign Up
                             </Button>
                             <Grid container>
                                 <Grid item>
-                                    <Link to="/signUp" variant="body2">
-                                        {"Don't have an account? Sign Up"}
+                                    <Link to="/" variant="body2">
+                                        {"Have an account? Login"}
                                     </Link>
                                 </Grid>
                             </Grid>
@@ -75,4 +85,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
