@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { Box, Button, Container, createTheme, CssBaseline, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const theme = createTheme();
+    const [userInfo, setUserInfo] = useState(null);
+    const [previousData, setPreviousData] = useState(null);
+    let navigate = useNavigate();
 
     const handleChange = e => {
-        
+        const userAllInfo = {...userInfo};
+        userAllInfo[e.target.name] = e.target.value;
+        setUserInfo(userAllInfo);
     }
 
     const handleSubmit = event => {
-        
+        event.preventDefault();
+
+        const getUserData = previousData.find(data => data.email === userInfo.email && data.password === userInfo.password);
+
+        if(getUserData?.email && getUserData?.password){
+            navigate("/index", { 
+                replace: true,
+            });
+        }
+        else{
+            alert("email or password is incorrect");
+        }
     }
+
+    useEffect(() => {
+        const userPrevInfo = JSON.parse(localStorage.getItem("userInfo"));
+        setPreviousData(userPrevInfo);
+    }, []);
 
     return (
         <div className='loginPage'>
