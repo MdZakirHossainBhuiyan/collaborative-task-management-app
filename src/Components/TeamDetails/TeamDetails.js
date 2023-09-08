@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './Index.css';
-import { UserContext } from '../../App';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header/Header';
-import TeamLists from '../TeamLists/TeamLists';
+import TaskLists from '../TaskLists/TaskLists';
 import { Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -15,25 +13,22 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-};
+};  
 
-const Index = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+const TeamDetails = () => {
+    const { id } = useParams();
+    const teamList = JSON.parse(localStorage.getItem("teamLists"));
+    const taskList = JSON.parse(localStorage.getItem("taskLists"));
+
     const [inputValue, setInputValue] = useState(null);
-    const [users, setUsers] = useState(null);
-    const [teamLists, setTeamLists] = useState(null);
     const [selectedMembers, setSelectedMembers] = useState([]);
+    const [users, setUsers] = useState(null);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let navigate = useNavigate();
 
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem("userInfo"));
-        const teamList = JSON.parse(localStorage.getItem("teamLists"));
-        setUsers(userData);
-        setTeamLists(teamList);
-    }, [])
+    const selectedTeam = teamList?.find(team => team?.id === id);
 
     const handleBlur = e => {
         const allValue = {...inputValue};
@@ -52,33 +47,34 @@ const Index = () => {
         const random = Math.random();
         const uniqueId = `${timestamp}-${random}`;
 
-        inputValue["id"] = uniqueId;
+        inputValue["taskId"] = uniqueId;
+        inputValue["teamId"] = id;
+        inputValue["status"] = "Pending";
 
-        if(teamLists){
-            const oldValues = [...teamLists];
+        if(taskList){
+            const oldValues = [...taskList];
             oldValues.push(inputValue);
-            localStorage.setItem("teamLists", JSON.stringify(oldValues));
-            setInputValue(null);
-            navigate("/index", { replace: true});
+            localStorage.setItem("taskLists", JSON.stringify(oldValues));
+            navigate(`/team/${id}`, { replace: true});
         }
         else{
             const oldValues = [];
             oldValues.push(inputValue);
-            localStorage.setItem("teamLists", JSON.stringify(oldValues));
-            setInputValue(null);
-            navigate("/index", { replace: true});
+            localStorage.setItem("taskLists", JSON.stringify(oldValues));
+            navigate(`/team/${id}`, { replace: true});
         }
     }
 
     return (
         <div>
             <Header />
+
             <div className='createTeamArea'>
-                <h1>Collaborative Task Management App</h1>
-                <button onClick={handleOpen}>Create Team</button>
+                <h1>{selectedTeam?.teamTitle}</h1>
+                <button onClick={handleOpen}>Create Task</button>
             </div>
 
-            <TeamLists />
+            <TaskLists selectedTeam={selectedTeam} />
 
             <div className='modalStyle'>
                 <Modal
@@ -88,31 +84,38 @@ const Index = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <h2 id="parent-modal-title">Create New Team</h2>
+                        <h2 id="parent-modal-title">Create New Task</h2>
                         <form onSubmit={handleSubmit}>
                             <div className='modalInputField'>
-                                <TextField onBlur={handleBlur} name="teamTitle" id="standard-basic" label="Team Title" variant="standard" fullWidth required/>
+                                <TextField onBlur={handleBlur} name="taskTitle" id="standard-basic" label="Task Title" variant="standard" fullWidth required/>
                             </div>
                             <div className='modalInputField'>
                                 <TextField
                                     id="outlined-multiline-static"
-                                    label="Team Description"
+                                    label="Task Description"
                                     multiline
                                     rows={2}
                                     fullWidth
-                                    name="description"
+                                    name="taskDescription"
                                     onBlur={handleBlur}
                                     required
                                 />
                             </div>
                             <div className='modalInputField'>
+                                <InputLabel id="demo-simple-select-label">Due Date</InputLabel>
+                                <TextField type='date' onBlur={handleBlur} name="dueDate" id="standard-basic"    variant="standard" fullWidth required/>
+                            </div>
+                            <div className='modalInputField'>
+                                <TextField type='number' onBlur={handleBlur} name="priorityLevel" id="standard-basic" label="Priority Level (1-5)" variant="standard" fullWidth required/>
+                            </div>
+                            <div className='modalInputField'>
                                 <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Select Team Members</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">Assign To</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        name="teamMember"
-                                        label="Invite Team Members"
+                                        name="assignTo"
+                                        label="Assign To"
                                         onBlur={handleBlur}
                                         required
                                         multiple
@@ -120,13 +123,12 @@ const Index = () => {
                                         onChange={handleChange}
                                     >
                                         {
-                                            users?.map((user) => (
+                                            selectedTeam?.teamMember?.map((member, index) => (
                                                 <MenuItem
-                                                    key={user?.userName}
-                                                    value={user?.userName}
+                                                    key={index}
+                                                    value={member}
                                                 >
-                                                    {/* <img className='dropdownImage' src={user?.image} alt='image' /> */}
-                                                    {user?.userName}
+                                                    {member}
                                                 </MenuItem>
                                             ))
                                         }
@@ -141,8 +143,9 @@ const Index = () => {
                     </Box>
                 </Modal>
             </div>
+
         </div>
     );
 };
 
-export default Index;
+export default TeamDetails;

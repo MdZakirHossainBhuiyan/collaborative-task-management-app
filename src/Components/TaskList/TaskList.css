@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.taskListArea{
+    /* width: 70%; */
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
+    place-items: center;
+}
+
+.taskCard{
+    width: 95%;
+    height: auto;
+    background-color:rgb(203, 205, 209);
+    color: #000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 8px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.cardLeft{
+    width: 50%;
+    padding-right: 5px;
+}
+
+.cardLeft h4{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.cardLeft p{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.cardRight{
+    padding-top: 28px;
+    width: 50%;
+}
+
+.cardRight p{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
