@@ -24,6 +24,8 @@ const TeamDetails = () => {
     const [inputValue, setInputValue] = useState(null);
     const [selectedMembers, setSelectedMembers] = useState([]);
     const [users, setUsers] = useState(null);
+    const [filterValue, setFilterValue] = useState(null);
+    const [filteredTask, setFilteredTask] = useState(null);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -35,6 +37,16 @@ const TeamDetails = () => {
         const allValue = {...inputValue};
         allValue[e.target.name] = e.target.value;
         setInputValue(allValue);
+    }
+
+    const handleFilter = e => {
+        setFilterValue(e.target.value);
+    }
+
+    const makeFilter = () => {
+        const filteredData = taskList?.filter(task => task?.status === filterValue);
+        if(filteredData?.length>0) setFilteredTask(filteredData);
+        
     }
 
     const handleChange = (event) => {
@@ -72,10 +84,16 @@ const TeamDetails = () => {
 
             <div className='createTeamArea'>
                 <h1>{selectedTeam?.teamTitle}</h1>
+                <div>
+                    <input onBlur={handleFilter} className='filterInput' type='text' name='filter' placeholder='filter by status' />
+                    <button onClick={makeFilter}>Filter</button>
+                </div>
                 <button onClick={handleOpen}>Create Task</button>
             </div>
 
-            <TaskLists selectedTeam={selectedTeam} />
+            {
+                (filteredTask) ? <TaskLists selectedTeam={selectedTeam} filteredTask={filteredTask} /> : <TaskLists selectedTeam={selectedTeam}  filteredTask="null" />
+            }
 
             <div className='modalStyle'>
                 <Modal

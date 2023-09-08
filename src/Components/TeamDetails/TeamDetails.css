@@ -8,3 +8,10 @@
     height: auto;
 }
 
+.filterInput{
+    margin-right: 5px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
