@@ -1,6 +1,6 @@
 # Collaborative Task Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Project live URL: https://collaborativetaskmanagem-69303.web.app
 
 ## Available Scripts
 

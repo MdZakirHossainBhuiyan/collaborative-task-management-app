@@ -55,6 +55,13 @@ const SignUp = () => {
         if(isValid){
             setError("This Email already exist");
         }else{
+
+            const timestamp = new Date().getTime();
+            const random = Math.random();
+            const uniqueId = `${timestamp}-${random}`;
+
+            userInfo["id"] = uniqueId;
+
             if(previousData){
                 const oldValues = [...previousData];
                 oldValues.push(userInfo);

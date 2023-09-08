@@ -40,12 +40,10 @@ const TaskLists = ({selectedTeam}) => {
 
     const selectedTeamTask = taskList?.filter(task => task?.teamId === selectedTeam?.id);
 
-    console.log("selectedTeamTask ", selectedTeamTask);
-
     return (
         <div className='taskListArea'>
             {
-                taskList.map((task, index) => <TaskList index={index} key={task?.taskId} task={task} />)
+                selectedTeamTask?.map((task, index) => <TaskList index={index} key={task?.taskId} task={task} />)
             }
         </div>
     );
