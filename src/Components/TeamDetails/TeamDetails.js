@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './TeamDetails.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header/Header';
 import TaskLists from '../TaskLists/TaskLists';
@@ -66,7 +67,7 @@ const TeamDetails = () => {
     }
 
     return (
-        <div>
+        <div className='teamDetailsArea'>
             <Header />
 
             <div className='createTeamArea'>

@@ -4,7 +4,6 @@
 }
 
 .taskListArea{
-    /* width: 70%; */
     margin-top: 50px;
     margin-left: 100px;
     margin-right: 100px;
@@ -17,36 +16,65 @@
 .taskCard{
     width: 95%;
     height: auto;
-    background-color:rgb(203, 205, 209);
-    color: #000;
     border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    padding: 5px 8px;
+    box-shadow: 5px 5px 7px gray;
     font-family: 'Times New Roman', Times, serif;
 }
 
 .cardLeft{
-    width: 50%;
-    padding-right: 5px;
+    width: 100%;
 }
 
-.cardLeft h4{
-    font-size: 20px;
-    margin-bottom: 5px;
+#title{
+    width: 40%;
+    background-color: cornflowerblue;
+    color: #fff;
+    padding: 5px 5px 5px 10px;
+    margin: 10px 0px 10px 15px;
+    border-radius: 10px;
 }
 
-.cardLeft p{
-    font-size: 14px;
-    margin-bottom: 5px;
+#description{
+    width: 90%;
+    text-align: justify;
+    font-style: italic;
+    padding: 5px 5px 5px 10px;
+    margin: 10px 0px 10px 15px;
+    border-radius: 10px;
 }
 
-.cardRight{
-    padding-top: 28px;
-    width: 50%;
+.datePriority{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    margin-left: 20px;  
 }
 
-.cardRight p{
-    font-size: 14px;
-    margin-bottom: 5px;
+#assign, #status{
+    width: 100%;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.spanStyle {
+    font-weight: 700;
+}
+
+.dropdownButton{
+    width: 90%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.taskCardButton{
+    padding: 5px 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
